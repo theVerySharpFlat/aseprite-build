@@ -64,8 +64,7 @@ jobs:
           -DSKIA_LIBRARY=$(PWD)/../Skia/out/Release-arm64/libskia.a \
           -DPNG_ARM_NEON:STRING=on \
           -DCMAKE_INSTALL_PREFIX=$(PWD)/install
-          -G Ninja \
-          ..
+          -G Ninja
     - name: Compiling
       shell: bash
       run: |
