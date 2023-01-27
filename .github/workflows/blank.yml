@@ -56,7 +56,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DENABLE_TESTS=OFF \
           -DENABLE_UI=${{ matrix.enable_ui }} \
-          -DENABLE_CCACHE=$enable_ccache
+          -DENABLE_CCACHE=$enable_ccache \
           -DCMAKE_OSX_ARCHITECTURES=arm64 \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DLAF_BACKEND=skia \
@@ -64,7 +64,7 @@ jobs:
           -DSKIA_LIBRARY_DIR=$(PWD)/../Skia/out/Release-arm64 \
           -DSKIA_LIBRARY=$(PWD)/../Skia/out/Release-arm64/libskia.a \
           -DPNG_ARM_NEON:STRING=on \
-          -DCMAKE_INSTALL_PREFIX=$(PWD)/install
+          -DCMAKE_INSTALL_PREFIX=$(PWD)/install \
           -G Ninja
     - name: Compiling
       shell: bash
