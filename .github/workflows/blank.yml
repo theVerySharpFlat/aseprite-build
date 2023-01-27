@@ -17,9 +17,11 @@ jobs:
         curl -LJO https://github.com/aseprite/aseprite/releases/download/v1.2.40/Aseprite-v1.2.40-Source.zip
         unzip Aseprite-v1.2.40-Source.zip
         cd ..
+        mkdir Skia
+        cd Skia
         curl -LJO https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-macOS-Release-arm64.zip
         unzip Skia-macOS-Release-arm64.zip
-        mv Skia-macOS-Release-arm64 Skia
+        cd ..
         cd Aseprite
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1
