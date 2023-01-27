@@ -11,6 +11,7 @@ jobs:
         enable_ui: [on]
     steps:
     - name: get aseprite
+      shell: zsh {0}
       run: |
         mkdir Aseprite
         cd Aseprite
@@ -36,7 +37,7 @@ jobs:
       shell: bash
       run: rm -rf C:/Strawberry/
     - name: Install Dependencies
-      shell: bash
+      shell: zsh {0}
       run: |
         if [[ "${{ runner.os }}" == "Linux" ]] ; then
           sudo apt-get update -qq
@@ -44,7 +45,7 @@ jobs:
             libx11-dev libxcursor-dev libxi-dev
         fi
     - name: Generating Makefiles
-      shell: bash
+      shell: zsh {0}
       run: |
         cd Aseprite
         if [[ "${{ runner.os }}" == "Windows" ]] ; then
@@ -67,16 +68,17 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=$(PWD)/install \
           -G Ninja
     - name: Compiling
-      shell: bash
+      shell: zsh {0}
       run: |
         cd Aseprite/build && ninja
     - name: installing
-      shell: bash
+      shell: zsh {0}
       run: |
+        alias sh=zsh
         cd Aseprite/build && ninja install
         
     - name: See output
-      shell: bash
+      shell: zsh {0}
       run: |
         cd Aseprite
         ls -R
