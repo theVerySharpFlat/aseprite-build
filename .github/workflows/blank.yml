@@ -46,6 +46,7 @@ jobs:
     - name: Generating Makefiles
       shell: bash
       run: |
+        cd Aseprite
         if [[ "${{ runner.os }}" == "Windows" ]] ; then
           export enable_ccache=off
         else
