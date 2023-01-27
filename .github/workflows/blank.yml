@@ -69,8 +69,14 @@ jobs:
     - name: Compiling
       shell: bash
       run: |
-        cd build && ninja
+        cd Aseprite/build && ninja
+    - name: installing
+      shell: bash
+      run: |
+        cd Aseprite/build && ninja install
+        
     - name: See output
       shell: bash
       run: |
+        cd Aseprite
         ls -R
