@@ -9,15 +9,16 @@ jobs:
         os: [macos-latest]
         build_type: [Release]
         enable_ui: [on]
-        include:
-          - os: ubuntu-latest
-            build_type: Debug
-            enable_ui: on
     steps:
-    - uses: actions/checkout@v2
-      with:
-        repository: 'aseprite/aseprite'
-        submodules: 'recursive'
+    - name: get aseprite
+      run: |
+        curl -LJO https://github.com/aseprite/aseprite/releases/download/v1.2.40/Aseprite-v1.2.40-Source.zip
+        unzip Aseprite-v1.2.40.zip
+        mv Aseprite-v1.2.40 Aseprite
+        curl -LJO https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-macOS-Release-arm64.zip
+        unzip Skia-macOS-Release-arm64.zip
+        mv Skia-macOS-Release-arm64 Skia
+        cd Aseprite
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1
       if: runner.os == 'Linux'
@@ -48,10 +49,19 @@ jobs:
         fi
         cmake -S . -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-          -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
-          -DENABLE_TESTS=ON \
+          -DENABLE_TESTS=OFF \
           -DENABLE_UI=${{ matrix.enable_ui }} \
           -DENABLE_CCACHE=$enable_ccache
+          -DCMAKE_OSX_ARCHITECTURES=arm64 \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+          -DLAF_BACKEND=skia \
+          -DSKIA_DIR=$HOME/deps/skia \
+          -DSKIA_LIBRARY_DIR=$(PWD)/../Skia/out/Release-arm64 \
+          -DSKIA_LIBRARY=$(PWD)/../Skia/out/Release-arm64/libskia.a \
+          -DPNG_ARM_NEON:STRING=on \
+          -DCMAKE_INSTALL_PREFIX=$(PWD)/install
+          -G Ninja \
+          ..
     - name: Compiling
       shell: bash
       run: |
