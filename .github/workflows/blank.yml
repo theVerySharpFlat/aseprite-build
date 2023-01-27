@@ -60,7 +60,7 @@ jobs:
           -DCMAKE_OSX_ARCHITECTURES=arm64 \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
           -DLAF_BACKEND=skia \
-          -DSKIA_DIR=$HOME/deps/skia \
+          -DSKIA_DIR=$(PWD)/../Skia \
           -DSKIA_LIBRARY_DIR=$(PWD)/../Skia/out/Release-arm64 \
           -DSKIA_LIBRARY=$(PWD)/../Skia/out/Release-arm64/libskia.a \
           -DPNG_ARM_NEON:STRING=on \
