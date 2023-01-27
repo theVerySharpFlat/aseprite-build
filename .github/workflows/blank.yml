@@ -75,6 +75,13 @@ jobs:
       run: |
         alias sh=zsh
         cd Aseprite/build && ninja install
+        cd ..
+        tar -czvf output.tar.gz install
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Aseprite/output.tar.gz
         
     - name: See output
       shell: zsh {0}
